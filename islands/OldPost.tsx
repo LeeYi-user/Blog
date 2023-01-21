@@ -4,6 +4,7 @@ import LikeButton from "@/components/LikeButton.tsx";
 interface Props {
     id: number;
     author: string;
+    avatar: string;
     date: string;
     text: string;
     likes: number;
@@ -40,7 +41,7 @@ export default function OldPost(props: Props) {
         <div class="md:w-1/2 w-[90%] h-auto mt-12 font-mono rounded border(gray-50 2) bg-gray-50 whitespace-pre-line">
             <div class="w-full h-14 flex flex-row">
                 <div class="mt-2 ml-2 mr-3">
-                    <img src="https://avatars.githubusercontent.com/u/68934115?v=4" class="w-12 h-12 rounded-1/2" />
+                    <img src={props.avatar} class="w-12 h-12 rounded-1/2" />
                 </div>
 
                 <div class="float-left">

@@ -17,6 +17,7 @@ interface Post
 {
     "id": number;
     "author": string;
+    "avatar": string;
     "date": string;
     "text": string;
     "like": Array<number>;
@@ -112,7 +113,7 @@ export default function Posts({ url, data }: PageProps) {
             <div class="w-full border flex flex-col items-center pb-12">
                 {data.posts.map((post: Post) => { return (
 
-                <OldPost id={post.id} author={post.author} date={post.date} text={post.text} likes={post.like.length} liked={post.like.indexOf(data.userId) > -1} login={data.login}></OldPost>
+                <OldPost id={post.id} author={post.author} avatar={post.avatar} date={post.date} text={post.text} likes={post.like.length} liked={post.like.indexOf(data.userId) > -1} login={data.login}></OldPost>
 
                 )})}
             </div>

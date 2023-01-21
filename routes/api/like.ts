@@ -14,6 +14,7 @@ interface Post
 {
     "id": number;
     "author": string;
+    "avatar": string;
     "date": string;
     "text": string;
     "like": Array<number>;

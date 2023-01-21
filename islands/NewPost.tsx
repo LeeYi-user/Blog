@@ -23,7 +23,7 @@ export default function NewPost(props: Props) {
 
                 <div class="float-left">
                     <div class="pt-2 font-bold text-xl">
-                        {/*props.userName*/} LeeYi
+                        {props.userName}
                     </div>
 
                     <div class="-my-1.5">
@@ -32,7 +32,7 @@ export default function NewPost(props: Props) {
                 </div>
 
                 <div class="pt-3 ml-auto pr-3">
-                    <ColoredButton onClick={() => post(/*props.userName*/ "LeeYi")}>Post</ColoredButton>
+                    <ColoredButton onClick={() => post(props.userName, props.avatarUrl)}>Post</ColoredButton>
                 </div>
             </div>
 
@@ -47,13 +47,13 @@ function type(event: any)
     text = event.target.value;
 }
 
-async function post(author: string)
+async function post(author: string, avatar: string)
 {
     await fetch("/api/post",
     {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "author": author, "date": date, "text": text })
+        body: JSON.stringify({ "author": author, "avatar": avatar, "date": date, "text": text })
     });
 
     location.href = "/posts";

@@ -14,6 +14,7 @@ interface Post
 {
     "id": number;
     "author": string;
+    "avatar": string;
     "date": string;
     "text": string;
     "like": Array<number>;
@@ -30,7 +31,7 @@ export async function handler(req: Request): Promise<Response> {
     {
         const posts = await db.collection<Post>("posts").countDocuments();
         const body = JSON.parse(new TextDecoder().decode((await req.body!.getReader().read()).value));
-        const post = { "id": posts + 1, "author": body.author, "date": body.date, "text": body.text, "like": [] }
+        const post = { "id": posts + 1, "author": body.author, "avatar": body.avatar, "date": body.date, "text": body.text, "like": [] }
 
         await db.collection<Post>("posts").insertOne(post);
     }
