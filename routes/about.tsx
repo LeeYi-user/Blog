@@ -1,7 +1,6 @@
 import { Handler, HandlerContext, PageProps } from "$fresh/server.ts";
-import { getCookies, setCookie } from "$std/http/cookie.ts";
+import { getCookies } from "$std/http/cookie.ts";
 import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
-import { gitHubApi } from "@/github.ts";
 import Footer from "@/components/Footer.tsx";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
@@ -29,41 +28,12 @@ export const handler: Handler = async (req: Request, ctx: HandlerContext): Promi
         {
             body.admin = true;
         }
-
-        return await ctx.render(body);
     }
 
-    const url = new URL(req.url);
-    const code = url.searchParams.get("code");
-
-    if (!code)
-    {
-        return await ctx.render(body);
-    }
-
-    const accessToken = await gitHubApi.getAccessToken(code);
-    const userData = await gitHubApi.getUserData(accessToken);
-
-    body.login = true;
-
-    if (Deno.env.get("ADMIN_ID") === userData.userId.toString())
-    {
-        body.admin = true;
-    }
-
-    await db.collection<Token>("tokens").insertOne({ "id": accessToken, "userId": userData.userId, "userName": userData.userName, "avatarUrl": userData.avatarUrl });
-    const response = await ctx.render(body);
-    setCookie(response.headers, {
-        name: "token",
-        value: accessToken,
-        expires: new Date(3000, 1, 1),
-        httpOnly: true
-    });
-
-    return response;
+    return await ctx.render(body);
 };
 
-export default function Home({ url, data }: PageProps) {
+export default function About({ url, data }: PageProps) {
     return (
         <>
             <div class="w-full top-4 absolute flex flex-row">
@@ -120,10 +90,34 @@ export default function Home({ url, data }: PageProps) {
                 </>)}
             </div>
 
-            <div class="bg-yellow-400 min-h-[75vh] flex justify-center m-0">
+            <div class="bg-purple-600 min-h-[75vh] flex justify-center m-0">
                 <h1 class="font-bold font-mono sm:text-9xl text-white my-auto text-7xl text-center">
-                    Welcome here!
+                    About me!
                 </h1>
+            </div>
+
+            <div class="w-full border flex justify-center">
+                <div class="font-mono my-12">
+                    My name is LeeYi.
+                    <br /><br />
+                    I’m from Taiwan where I finished my schooling last year from National Kinmen Senior High School.
+                    <br /><br />
+                    I like watching movies, at least once a month.
+                    <br /><br />
+                    I play video games on weekends and chess whenever I get time.
+                    <br /><br />
+                    I’m into reading thriller novels as well, Dan Brown being my favorite novelist.
+                    <br /><br />
+                    I’m happy to step into college life, which provides more freedom and where, finally, I don’t have to come in a uniform.
+                    <br /><br />
+                    Post-college, I aspire to work in tech industry.
+                    <br /><br />
+                    I’m particularly strong in JavaScript and creating well-designed websites and applications.
+                    <br /><br />
+                    If anyone requires support in these areas, I’ll be glad to help. I look forward to meeting each one of you in the coming days.
+                    <br /><br />
+                    Thanks. Have a great day.
+                </div>
             </div>
 
             <div class="flex justify-center">

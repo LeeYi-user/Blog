@@ -1,7 +1,7 @@
 import { Handler, HandlerContext, PageProps } from "$fresh/server.ts";
-import { getCookies, setCookie } from "$std/http/cookie.ts";
+import { getCookies } from "$std/http/cookie.ts";
 import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
-import { gitHubApi } from "@/github.ts";
+import OldPost from "@/islands/OldPost.tsx";
 import Footer from "@/components/Footer.tsx";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
@@ -13,57 +13,40 @@ interface Token
     "avatarUrl": string;
 }
 
+interface Post
+{
+    "id": number;
+    "author": string;
+    "date": string;
+    "text": string;
+    "like": Array<number>;
+}
+
 const client = new MongoClient();
 await client.connect(Deno.env.get("URI")!);
 const db = client.database("blog");
 
 export const handler: Handler = async (req: Request, ctx: HandlerContext): Promise<Response> => {
     const token = getCookies(req.headers)["token"];
-    const body = { login: false, admin: false };
+    const body = { login: false, userId: -1, admin: false, posts: {} };
 
     if (token)
     {
         body.login = true;
+        body.userId = (await db.collection<Token>("tokens").findOne({ "id": token }))?.userId!;
 
-        if (Deno.env.get("ADMIN_ID") === (await db.collection<Token>("tokens").findOne({ "id": token }))?.userId.toString())
+        if (Deno.env.get("ADMIN_ID") === body.userId.toString())
         {
             body.admin = true;
         }
-
-        return await ctx.render(body);
     }
 
-    const url = new URL(req.url);
-    const code = url.searchParams.get("code");
+    body.posts = await db.collection<Post>("posts").find().sort({ "_id": -1 }).limit(10).toArray();
 
-    if (!code)
-    {
-        return await ctx.render(body);
-    }
-
-    const accessToken = await gitHubApi.getAccessToken(code);
-    const userData = await gitHubApi.getUserData(accessToken);
-
-    body.login = true;
-
-    if (Deno.env.get("ADMIN_ID") === userData.userId.toString())
-    {
-        body.admin = true;
-    }
-
-    await db.collection<Token>("tokens").insertOne({ "id": accessToken, "userId": userData.userId, "userName": userData.userName, "avatarUrl": userData.avatarUrl });
-    const response = await ctx.render(body);
-    setCookie(response.headers, {
-        name: "token",
-        value: accessToken,
-        expires: new Date(3000, 1, 1),
-        httpOnly: true
-    });
-
-    return response;
+    return await ctx.render(body);
 };
 
-export default function Home({ url, data }: PageProps) {
+export default function Posts({ url, data }: PageProps) {
     return (
         <>
             <div class="w-full top-4 absolute flex flex-row">
@@ -120,10 +103,18 @@ export default function Home({ url, data }: PageProps) {
                 </>)}
             </div>
 
-            <div class="bg-yellow-400 min-h-[75vh] flex justify-center m-0">
+            <div class="bg-green-500 min-h-[75vh] flex justify-center m-0">
                 <h1 class="font-bold font-mono sm:text-9xl text-white my-auto text-7xl text-center">
-                    Welcome here!
+                    My Posts!
                 </h1>
+            </div>
+
+            <div class="w-full border flex flex-col items-center pb-12">
+                {data.posts.map((post: Post) => { return (
+
+                <OldPost id={post.id} author={post.author} date={post.date} text={post.text} likes={post.like.length} liked={post.like.indexOf(data.userId) > -1} login={data.login}></OldPost>
+
+                )})}
             </div>
 
             <div class="flex justify-center">

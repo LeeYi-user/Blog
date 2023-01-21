@@ -1,5 +1,5 @@
-import { Options } from "$fresh/plugins/twind.ts";
+/** @type {Omit<import("$fresh/plugins/twind.ts").Options, "selfURL">} */
 
 export default {
   selfURL: import.meta.url,
-} as Options;
+};
