@@ -14,6 +14,24 @@ const date = year + "-" + month + "-" + day;
 let text: string;
 
 export default function NewPost(props: Props) {
+    // deno-lint-ignore no-explicit-any
+    function type(event: any)
+    {
+        text = event.target.value;
+    }
+
+    async function post()
+    {
+        await fetch("/api/post",
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "author": props.userName, "avatar": props.avatarUrl, "date": date, "text": text })
+        });
+
+        location.href = "/posts";
+    }
+
     return (
         <div class="md:w-1/2 w-[90%] h-auto mt-12 font-mono rounded border(gray-50 2) bg-gray-50 whitespace-pre-line">
             <div class="w-full h-auto flex flex-row">
@@ -32,29 +50,11 @@ export default function NewPost(props: Props) {
                 </div>
 
                 <div class="pt-3 ml-auto pr-3">
-                    <ColoredButton onClick={() => post(props.userName, props.avatarUrl)}>Post</ColoredButton>
+                    <ColoredButton onClick={post}>Post</ColoredButton>
                 </div>
             </div>
 
             <textarea class="h-80 px-4 py-4 resize-y outline-none w-full font-mono bg-gray-50" placeholder="Type something..." onChange={type}></textarea>
         </div>
     );
-}
-
-// deno-lint-ignore no-explicit-any
-function type(event: any)
-{
-    text = event.target.value;
-}
-
-async function post(author: string, avatar: string)
-{
-    await fetch("/api/post",
-    {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "author": author, "avatar": avatar, "date": date, "text": text })
-    });
-
-    location.href = "/posts";
 }

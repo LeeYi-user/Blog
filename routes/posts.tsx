@@ -29,14 +29,14 @@ const db = client.database("blog");
 
 export const handler: Handler = async (req: Request, ctx: HandlerContext): Promise<Response> => {
     const token = getCookies(req.headers)["token"];
-    const body = { login: false, userId: -1, admin: false, posts: {} };
+    const body = { login: false, userId: 0, admin: false, posts: {} };
 
     if (token)
     {
         body.login = true;
         body.userId = (await db.collection<Token>("tokens").findOne({ "id": token }))?.userId!;
 
-        if (Deno.env.get("ADMIN_ID") === body.userId.toString())
+        if (Deno.env.get("ADMIN_ID") === body.userId?.toString())
         {
             body.admin = true;
         }

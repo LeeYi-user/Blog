@@ -38,7 +38,7 @@ export class GitHubApi {
     const userData = await response.json();
     return {
       userId: userData.id as number,
-      userName: (userData.name === null ? userData.login : userData.name) as string,
+      userName: (userData.name || userData.login) as string,
       avatarUrl: userData["avatar_url"] as string,
     };
   }

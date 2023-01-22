@@ -16,7 +16,7 @@ export default function OldPost(props: Props) {
     const [likes, setLikes] = useState(props.likes);
     const [liked, setLiked] = useState(props.liked);
 
-    async function like(id: number)
+    async function like()
     {
         if (liked)
         {
@@ -33,7 +33,7 @@ export default function OldPost(props: Props) {
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "id": id })
+            body: JSON.stringify({ "id": props.id })
         });
     }
 
@@ -55,7 +55,7 @@ export default function OldPost(props: Props) {
                 </div>
 
                 <div class="pt-3 ml-auto pr-3">
-                    <LikeButton onClick={() => like(props.id)} disabled={!props.login}>{liked ? "🖤" : "🤍"} {likes}</LikeButton>
+                    <LikeButton onClick={like} disabled={!props.login}>{liked ? "🖤" : "🤍"} {likes}</LikeButton>
                 </div>
             </div>
 

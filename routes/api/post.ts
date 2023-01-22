@@ -30,7 +30,7 @@ export async function handler(req: Request): Promise<Response> {
     if (token && Deno.env.get("ADMIN_ID") === (await db.collection<Token>("tokens").findOne({ "id": token }))?.userId.toString())
     {
         const posts = await db.collection<Post>("posts").countDocuments();
-        const body = JSON.parse(new TextDecoder().decode((await req.body!.getReader().read()).value));
+        const body = JSON.parse(new TextDecoder().decode((await req.body?.getReader().read())?.value));
         const post = { "id": posts + 1, "author": body.author, "avatar": body.avatar, "date": body.date, "text": body.text, "like": [] }
 
         await db.collection<Post>("posts").insertOne(post);
