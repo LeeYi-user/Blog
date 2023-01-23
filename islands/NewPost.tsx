@@ -18,6 +18,8 @@ export default function NewPost(props: Props) {
     function type(event: any)
     {
         text = event.target.value;
+        event.target.style.height = 0;
+        event.target.style.height = (event.target.scrollHeight) + "px";
     }
 
     async function post()
@@ -54,7 +56,7 @@ export default function NewPost(props: Props) {
                 </div>
             </div>
 
-            <textarea class="h-80 px-4 py-4 resize-y outline-none w-full font-mono bg-gray-50" placeholder="Type something..." onChange={type}></textarea>
+            <textarea class="h-14 px-4 py-4 resize-none outline-none w-full font-mono bg-gray-50 align-top" placeholder="Type something..." onInput={type}></textarea>
         </div>
     );
 }
