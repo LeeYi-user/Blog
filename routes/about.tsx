@@ -1,4 +1,5 @@
 import { Handler, HandlerContext, PageProps } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 import Footer from "@/components/Footer.tsx";
@@ -36,6 +37,10 @@ export const handler: Handler = async (req: Request, ctx: HandlerContext): Promi
 export default function About({ url, data }: PageProps) {
     return (
         <>
+            <Head>
+                <title>Blog</title>
+            </Head>
+
             <div class="w-full top-4 absolute flex flex-row">
                 <div class="ml-4 flex flex-row justify-start gap-x-6 sm:gap-x-8">
                     <a class="font-bold font-mono text-xl text-white hover:underline" style="text-underline-offset: 4px;" href="/">

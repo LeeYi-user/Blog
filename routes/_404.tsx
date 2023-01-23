@@ -1,9 +1,14 @@
+import { Head } from "$fresh/runtime.ts";
 import Footer from "@/components/Footer.tsx";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
 export default function Error() {
     return (
         <>
+            <Head>
+                <title>Blog</title>
+            </Head>
+
             <div class="w-full top-4 absolute flex flex-row">
                 <div class="ml-4 flex flex-row justify-start gap-x-6 sm:gap-x-8">
                     <a class="font-bold font-mono text-xl text-white hover:underline" style="text-underline-offset: 4px;" href="/">
