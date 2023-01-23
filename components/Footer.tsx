@@ -10,10 +10,10 @@ export default function Footer({ children }: Props) {
     {
       title: "Social",
       children: [
-        { name: "Discord", href: "#" },
-        { name: "Facebook", href: "#" },
-        { name: "Instagram", href: "#" },
-        { name: "YouTube", href: "#" },
+        { name: "Discord", href: "https://discord.gg/VJHNZWW5fm" },
+        { name: "Facebook", href: "https://www.facebook.com/people/%E6%9D%8E%E6%98%93/100024822601029/" },
+        { name: "Twitter", href: "https://twitter.com/LeeYi96652965" },
+        { name: "YouTube", href: "https://www.youtube.com/channel/UCkCfLC0DFhDNSN1pnhe-KLw" },
       ],
     },
     {
@@ -60,8 +60,8 @@ export default function Footer({ children }: Props) {
 
       <div class="text-gray-500 space-y-2">
         <div class="text-xs">
-          Copyright © 2023 LeeYi<br />
-          All right reserved.
+          Copyright © 2023 LeeYi-user<br />
+          Under MIT License.
         </div>
 
         <a
