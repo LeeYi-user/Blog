@@ -25,7 +25,7 @@ export default function Error() {
                 </div>
             </div>
 
-            <div class="bg-red-600 min-h-[75vh] flex justify-center m-0">
+            <div class="bg-red-600 min-h-[calc(100vh-212px)] flex justify-center m-0">
                 <h1 class="font-bold font-mono sm:text-9xl text-white my-auto text-7xl text-center">
                     Error 404!
                 </h1>

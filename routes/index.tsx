@@ -125,7 +125,7 @@ export default function Home({ url, data }: PageProps) {
                 </>)}
             </div>
 
-            <div class="bg-yellow-400 min-h-[75vh] flex justify-center m-0">
+            <div class="bg-yellow-400 min-h-[calc(100vh-212px)] flex justify-center m-0">
                 <h1 class="font-bold font-mono sm:text-9xl text-white my-auto text-7xl text-center">
                     Welcome here!
                 </h1>

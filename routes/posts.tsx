@@ -109,7 +109,7 @@ export default function Posts({ url, data }: PageProps) {
                 </>)}
             </div>
 
-            <div class="bg-green-500 min-h-[75vh] flex justify-center m-0">
+            <div class="bg-green-500 min-h-[calc(100vh-212px)] flex justify-center m-0">
                 <h1 class="font-bold font-mono sm:text-9xl text-white my-auto text-7xl text-center">
                     My Posts!
                 </h1>

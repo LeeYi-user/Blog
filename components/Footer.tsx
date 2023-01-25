@@ -10,8 +10,8 @@ export default function Footer({ children }: Props) {
     {
       title: "Social",
       children: [
-        { name: "Discord", href: "https://discord.gg/VJHNZWW5fm" },
         { name: "Facebook", href: "https://www.facebook.com/people/%E6%9D%8E%E6%98%93/100024822601029/" },
+        { name: "Instagram", href: "https://www.instagram.com/leeyi.user/" },
         { name: "Twitter", href: "https://twitter.com/LeeYi96652965" },
         { name: "YouTube", href: "https://www.youtube.com/channel/UCkCfLC0DFhDNSN1pnhe-KLw" },
       ],
